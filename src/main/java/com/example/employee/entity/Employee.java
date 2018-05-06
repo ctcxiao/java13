@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-@Table(name = "employee")
 public class Employee {
 
     @Id
