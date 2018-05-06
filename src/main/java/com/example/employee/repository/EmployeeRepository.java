@@ -18,10 +18,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("select new com.example.employee.entity.Employee(em.name, em.age, em.gender, em.id, em.companyId, em.salary) from Employee as em where name=:name")
     Employee findEmployeeByName(@Param("name")String name);
     //2.找出Employee表中第一个姓名包含`*`字符并且薪资大于*的雇员个人信息
-    @Query("select name from Employee where name like %:n% and salary > 6000")
+    @Query(value = "select name from Employee where name like %?1% limit 0,1", nativeQuery = true)
     String findEmployeeContainParam(@Param("n")String param);
     //3.找出一个薪资最高且公司ID是*的雇员以及该雇员的姓名
-    @Query("select name from Employee where id =:id  group by id")
+    @Query(value = "select name from Employee where id =?1  order by id limit 0,1", nativeQuery = true)
     String findMaxSalaryEmplaoyee(@Param("id")int id);
     //4.实现对Employee的分页查询，每页两个数据
     @Query("select new com.example.employee.entity.Employee(em.name, em.age, em.gender, em.id, em.companyId, em.salary) from Employee as em")
