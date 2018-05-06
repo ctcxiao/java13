@@ -27,10 +27,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     String findCompanyName(@Param("name") String employeeName);
     //6.将*的名字改成*,输出这次修改影响的行数
     @Modifying
-    @Query("update Employee set name=:newName where name=:name")
-    int updateNameToNew(@Param("name")String name, @Param("newName")String newName);
+    @Query("update Employee set name=?2 where name=?1")
+    int updateNameToNew(String name, String newName);
 
     //7.删除姓名是*的employee
 
-    void deleteEmployeeByName(@Param("name")String name);
+    void deleteEmployeeByName(String name);
 }
