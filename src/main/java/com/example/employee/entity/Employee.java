@@ -1,5 +1,7 @@
 package com.example.employee.entity;
 
+import org.springframework.web.bind.annotation.Mapping;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
