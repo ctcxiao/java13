@@ -15,16 +15,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     //以下所有的*都代表变量
 
     //1.查询名字是*的第一个employee
-    @Query("select new com.example.employee.entity.Employee(em.name, em.age, em.gender, em.id, em.companyId, em.salary) from Employee as em where name=:name")
-    Employee findEmployeeByName(@Param("name")String name);
+    Employee findEmployeeByName(String name);
     //2.找出Employee表中第一个姓名包含`*`字符并且薪资大于*的雇员个人信息
-    @Query(value = "select name from Employee where name like %?1% and salary > 6000", nativeQuery = true)
-    String findEmployeeContainParam(@Param("n")String param);
+    Employee findEmployeeContainParam(String param, int salary);
     //3.找出一个薪资最高且公司ID是*的雇员以及该雇员的姓名
-    @Query(value = "select name from Employee where companyId =?1  order by salary desc limit 0,1", nativeQuery = true)
-    String findMaxSalaryEmplaoyee(@Param("id")int id);
+    Employee findMaxSalaryEmplaoyee(int id);
     //4.实现对Employee的分页查询，每页两个数据
-    @Query("select new com.example.employee.entity.Employee(em.name, em.age, em.gender, em.id, em.companyId, em.salary) from Employee as em")
     Page<Employee> findWithPage(Pageable pageable);
     //5.查找**的所在的公司的公司名称
     @Query(value = "SELECT companyName FROM Company AS a JOIN Employee AS b ON a.id = b.companyId WHERE name=?1", nativeQuery = true)
@@ -32,11 +28,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     //6.将*的名字改成*,输出这次修改影响的行数
     @Modifying
     @Query("update Employee set name=:newName where name=:name")
-    void updateNameToNew(@Param("name")String name, @Param("newName")String newName);
-    @Query(value = "select row_count()", nativeQuery = true)
-    int findAffectRows();
+    int updateNameToNew(@Param("name")String name, @Param("newName")String newName);
+
     //7.删除姓名是*的employee
-    @Modifying
-    @Query("delete from Employee where name=:name")
+
     void deleteEmployeeByName(@Param("name")String name);
 }

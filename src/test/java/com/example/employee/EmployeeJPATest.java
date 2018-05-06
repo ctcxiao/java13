@@ -49,7 +49,7 @@ public class EmployeeJPATest {
     public void should_return_employee_given_character_in_name_and_salary_large_than() throws Exception {
         //2.找出Employee表中第一个姓名包含`n`字符的雇员所有个人信息
         Employee expectedEmployee = new Employee("xiaohong",19,"female",7000,1, 1);
-        String actualName = employeeRepository.findEmployeeContainParam("n");
+        String actualName = employeeRepository.findEmployeeContainParam("n", 6000).getName();
         assertThat(actualName).isEqualTo(expectedEmployee.getName());
     }
 
@@ -57,7 +57,7 @@ public class EmployeeJPATest {
     public void should_return_employee_name_when_employee_salary_is_max_and_given_company_id_() throws Exception {
         //3.找出一个薪资最高且公司ID是1的雇员以及该雇员的name
         Employee expectedEmployee = new Employee("xiaohong",19,"female",7000,1, 1);
-        String actualName = employeeRepository.findMaxSalaryEmplaoyee(1);
+        String actualName = employeeRepository.findMaxSalaryEmplaoyee(1).getName();
         assertThat(actualName).isEqualTo(expectedEmployee.getName());
     }
 
@@ -81,8 +81,7 @@ public class EmployeeJPATest {
     public void should_return_influence_lines_when_update_employee_name() throws Exception {
         //6.将xiaohong的名字改成xiaobai,输出这次修改影响的行数
         Integer expectedLine = 1;
-        employeeRepository.updateNameToNew("xiaohong", "xiaobai");
-        Integer actualLine = employeeRepository.findAffectRows();
+        Integer actualLine = employeeRepository.updateNameToNew("xiaohong", "xiaobai");
         assertThat(actualLine).isEqualTo(expectedLine);
     }
 
